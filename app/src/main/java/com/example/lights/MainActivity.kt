@@ -10,6 +10,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
+import android.widget.ImageButton
+import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
@@ -23,7 +25,7 @@ class MainActivity : AppCompatActivity() {
 
     private val CAMERA_PERMISSION = 200
     var flashLightStatus: Boolean = false
-    var btAction: Button? = null
+    //var btAction: Button? = null
 
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,8 +34,19 @@ class MainActivity : AppCompatActivity() {
         getSupportActionBar()?.hide();   // hides bar
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
         actionBar?.hide()
+        /////////////////////////////////////////
+        /////////////////////////////////////////
 
-        btAction = findViewById(R.id.btAction)
+        MobileAds.initialize(this) {}
+        lateinit var mAdView : AdView
+        mAdView = findViewById(R.id.adView)
+        val adRequest = AdRequest.Builder().build()
+        mAdView.loadAd(adRequest)
+
+        /////////////////////////////////////////
+        ////////////////////////////////////////
+
+        val btAction = findViewById<ImageButton>(R.id.switchl)
 
         btAction!!.setOnClickListener({
             val permissions = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
@@ -88,12 +101,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        MobileAds.initialize(this) {}
-
-        lateinit var mAdView : AdView
-        mAdView = findViewById(R.id.adView)
-        val adRequest = AdRequest.Builder().build()
-        mAdView.loadAd(adRequest)
     }
 }
 
